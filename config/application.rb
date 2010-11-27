@@ -38,5 +38,13 @@ module SampleApp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    ### spork HACK -added by franklin
+    if Rails.env.test?
+      initializer :after => :initialize_dependency_mechanishm do
+          #work around initializer in railties/lib/rails/applicationbootstrap.rb
+          ActiveSupport::Dependencies.mechanism = :load
+        end
+      end
   end
 end
